@@ -1,0 +1,41 @@
+.footer {
+  background-color: hsl(0, 0%, 13%);
+  color: hsl(0, 0%, 60%);
+  width: 100%;
+
+  h3 {
+    color: hsl(353, 100%, 78%);
+  }
+  .footer-title {
+    display: flex;
+    margin-right: 10px;
+  }
+
+  a {
+    margin: 7px 12px;
+    text-decoration: none;
+    text-transform: capitalize;
+    color: hsl(0, 0%, 60%);
+    &:hover,
+    &:active,
+    &:focus {
+      color: hsl(353, 100%, 78%);
+      transform: scale(1.1);
+    }
+  }
+
+  .header{
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: larger;
+
+  
+.line {
+  width: 50px;
+  border-bottom: 3px solid hsl(353, 100%, 78%);
+}
+  }
+
+
+}

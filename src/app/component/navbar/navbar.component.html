@@ -1,0 +1,115 @@
+<nav class="navbar navbar-expand-lg bg-transparent mb-0">
+  <div class="container-fluid d-block">
+<div class="container d-flex justify-content-between align-items-center mb-0">
+  <ul class="nav-item d-flex align-items-center me-3 mb-0 gap-1 ">
+    <a class="social-icon " href="https://www.facebook.com/"><i class="fab mx-1 fa-facebook"></i></a>
+    <a class="social-icon" href="https://www.twitter.com/"><i class="fab mx-1 fa-twitter"></i></a>
+    <a class="social-icon" href="https://www.spotify.com/"><i class="fab mx-1 fa-spotify "></i></a>
+    <a class="social-icon" href="https://www.google.com/"><i class="fab mx-1 fa-google"></i></a>
+    <a class="social-icon" href="https://www.youtube.com/"><i class="fab mx-1 fa-youtube"></i></a>
+  </ul>
+
+  <p class="text-uppercase text-secondary mb-0">Free Shipping This Week Order Over - $55</p>
+<ul class="navbar-nav d-flex align-items-center ms-3 mb-0">
+
+  <!-- USER ICON -->
+  <li class="nav-item">
+    <a class="nav-link fs-1"
+       routerLink="favorite"
+       routerLinkActive="active-link"
+       #rlaUser="routerLinkActive">
+
+      <i class="bi"
+         [ngClass]="rlaUser.isActive ? 'bi-person-fill' : 'bi-person'"></i>
+
+    </a>
+  </li>
+
+  <!-- HEART -->
+  <li class="nav-item">
+    <a class="nav-link fs-3 position-relative"
+       routerLink="favorite"
+       routerLinkActive="active-link"
+       #rlaHeart="routerLinkActive">
+
+      <i class="bi position-relative"
+         [ngClass]="rlaHeart.isActive ? 'bi-heart-fill' : 'bi-heart'">
+
+        <span class="badge-heart">1</span>
+      </i>
+
+    </a>
+  </li>
+
+  <!-- BAG -->
+  <li class="nav-item">
+    <a class="nav-link fs-3 position-relative"
+       routerLink="cart"
+       routerLinkActive="active-link"
+       #rlaBag="routerLinkActive">
+
+      <i class="bi position-relative"
+         [ngClass]="rlaBag.isActive ? 'bi-bag-fill' : 'bi-bag'">
+
+        <span class="badge-heart">20</span>
+      </i>
+
+    </a>
+  </li>
+
+</ul>
+
+</div>
+
+
+    <hr>
+
+  <nav class="navbar navbar-expand-lg mt-0 ">
+  <div class="container d-flex justify-content-between align-items-center">
+    
+    <a class="navbar-brand" href="#">
+      <h1 class="text-uppercase ">Roka</h1>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+      <ul class="navbar-nav mb-0 text-uppercase fs-5 gap-3">
+        @if(1) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="home" routerLinkActive="active">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="about" routerLinkActive="active">Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="movies" routerLinkActive="active">Men's</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="favorite" routerLinkActive="active">Women's</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="movies" routerLinkActive="active">Jewelry</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="movies" routerLinkActive="active">Perfume</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="movies" routerLinkActive="active">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="movies" routerLinkActive="active">Hot Offers</a>
+          </li>
+        }
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+  </div>
+</nav>

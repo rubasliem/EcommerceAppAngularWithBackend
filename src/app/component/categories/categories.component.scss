@@ -1,0 +1,55 @@
+/* شكل زر الأكوردين الأساسي */
+.custom-dropdown-btn {
+  background-color: transparent;
+  color: #4b5156;
+  font-size: 1.1rem;
+  display: flex;
+  align-items:start;
+  gap: 10px;
+  box-shadow: none !important;
+  border:0;
+}
+
+/* أيقونة + */
+.toggle-icon::before {
+  content: "+";
+  font-size: 22px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+/* عند فتح القائمة يتحول إلى − */
+.accordion-button:not(.collapsed) .toggle-icon::before {
+  content: "−";
+}
+
+/* إلغاء سهم البوتستراب */
+.accordion-button::after {
+  display: none !important;
+}
+
+/* صورة الأيقونة */
+.custom-dropdown-btn .icon {
+  width: 25px;
+  height: 2px;
+}
+
+
+.custom-dropdown-btn .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #f8f9fa;
+  color: #333 !important;
+}
+
+.accordion-item {
+  margin-bottom: 5px;
+}
+
+/* إزالة حدود البوتستراب */
+.accordion-button {
+  border: none !important;
+}

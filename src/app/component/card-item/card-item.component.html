@@ -1,0 +1,40 @@
+<div class="card position-relative text-center h-100 border-1" style="cursor:pointer">
+  <div class="image-wrapper position-relative">
+    <img
+      [src]="item.images ? item.images[0] : item.image ? item.image : '/assets/handWash.jpg'"
+      class="card-img-top product-img"
+      alt="{{item.title}}"
+    />
+
+    <div class="icon-menu d-flex flex-column">
+      <button class="icon-btn"><i class="bi bi-eye"></i></button>
+      <button class="icon-btn"><i class="bi bi-bag"></i></button>
+      <button class="icon-btn"><i class="bi bi-heart"></i></button>
+    </div>
+  </div>
+
+  <div class="card-body pt-0 left-text">
+    <div class="d-flex justify-content-between">
+      <p style="color: hsl(353, 100%, 78%)">{{ item.category }}</p>
+      <p class="text-end">
+        ({{ item.stock || item.rating?.count || '0' }})
+      </p>
+    </div>
+
+    <p class="text-secondary text-start">{{ item.title || 'Hand Wash' }}</p>
+
+    <div class="d-flex">
+      <h5>{{ item.price | currency:'USD' }}</h5>
+      <h5 class="ms-3 text-secondary text-decoration-line-through">
+        {{ (item.price * 1.4).toFixed(2) | currency:'USD' }}
+      </h5>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+      <ng-container *ngFor="let star of getStars(getRatingRate(item))">
+        <i class="bi bi-star-fill text-warning"></i>
+      </ng-container>
+      <i class="bi bi-star-half  text-warning"></i>
+    </div>
+  </div>
+</div>

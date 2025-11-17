@@ -1,0 +1,221 @@
+<div class="container-fluid mt-3">
+  <div class="hero-section mx-auto">
+    <h3 class="text-secondary fw-bold">Trending item</h3>
+    <h1 class="fs-1 text-uppercase my-2 fw-bolder text-light">
+      Women's latest <br />fashion sale
+    </h1>
+    <h3 class="text-secondary mb-4">
+      starting at $ <span class="fs-1 fw-bold">20</span>.00
+    </h3>
+    <button class="btn text-uppercase text-bold px-3">Shop now</button>
+  </div>
+</div>
+
+<!-- ------------------------------------------------------------------------------------------- -->
+ 
+<div class="container scroll-container">
+  <div class="card-wrapper" *ngFor="let cat of categories">
+    <div class="custom-flex-container">
+      <img src="{{cat.icon}}" class="category-icon" alt="{{cat.name}}">
+      <div class="text-content">
+        <div class="d-flex justify-content-between mb-1">
+          <h6 class="fw-bold">{{cat.name}}</h6>
+          <h6>({{cat.count}})</h6>
+        </div>
+        <a class="show-all" href="#">Show All</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ------------------------------------------------------------------------------------------- -->
+
+  <div class="container my-5">
+  <div class="row">
+
+    <!-- Sidebar -->
+     <div class="col-md-3">
+      <div class="sidebar p-3 border rounded">
+    <app-categories></app-categories>
+        </div>
+        </div>
+
+    <!-- المنتجات -->
+    <div class="col-md-9">
+      <div class="row g-3">
+          <div class="col-md-3" *ngFor="let item of protects1">
+         <app-card-item [item]="item"></app-card-item>
+      </div>
+        <div class="col-md-3" *ngFor="let item of protects">
+          <app-card-item [item]="item"></app-card-item>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ------------------------------------------------------------------------------------------- -->
+
+<div class="container my-5">
+  <div class="row g-5">
+    <!-- العمود 1 -->
+    <div class="col-12 col-md-3">
+      <h5>testimonial</h5>
+      <hr />
+      <div class="card p-3 text-center">
+        <div class="text-center">
+          <img class="img-circle" src="assets/testimonial-1.jpg" alt="" />
+
+          <h6 class="text-uppercase text-secondary fw-bold">Alan Doe</h6>
+
+          <p>CEO & Founder Invision</p>
+          <img class="img-quotes" src="/assets/quotes.svg" />
+          <p class="text-secondary w-75 mx-auto">
+            Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor dolor sit
+            amet.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- العمود 2 (الوسط) -->
+    <div class="img-col col-12 col-md-6">
+      <a><div class="img-card card p-3 text-center">
+        <button class="btn bg-black text-uppercase text-light fw-bold mb-2">25% Discount</button>
+        <h4 class="fw-bold" >Summer Collection</h4>
+        <p>Starting &#64; $10</p>
+        <h5 class="text-secondary fw-bold text-uppercase">Shop now</h5>  
+      </div></a>
+    </div>
+
+    <!-- العمود 3 -->
+    <div class="col-12 col-md-3">
+      <h5>Our Services</h5>
+      <hr />
+      <div class="card p-3 ">
+  <div class="d-flex align-items-center gap-4 my-1">
+    <a href="#" class="services-icon">
+      <i class="bi bi-truck"></i>
+    </a>
+    <div class="text-secondary">
+      <h6 class="fw-bold m-0">Worldwide Delivery</h6>
+      <p class="m-0">For Order Over $100</p>
+    </div>
+  </div>
+    <div class="d-flex align-items-center gap-4">
+    <a href="#" class="services-icon">
+      <i class="bi bi-rocket-takeoff"></i>
+    </a>
+    <div class="text-secondary">
+      <h6 class="fw-bold m-0">Next Day delivery</h6>
+      <p class="m-0">UK Orders Only</p>
+    </div>
+  </div>
+    <div class="d-flex align-items-center gap-4 my-1">
+    <a href="#" class="services-icon">
+      <i class="bi bi-telephone"></i>
+    </a>
+    <div class="text-secondary">
+      <h6 class="fw-bold m-0">Best Online Support</h6>
+      <p class="m-0">Hours: 8AM - 11PM</p>
+    </div>
+  </div>
+    <div class="d-flex align-items-center gap-4">
+    <a href="#" class="services-icon">
+      <i class="bi bi-cursor"></i>
+    </a>
+    <div class="text-secondary">
+      <h6 class="fw-bold m-0">Return Policy</h6>
+      <p class="m-0">Easy & Free Return</p>
+    </div>
+  </div>
+   <div class="d-flex align-items-center gap-4 my-1">
+    <a href="#" class="services-icon">
+      <i class="bi bi-bandaid"></i>
+    </a>
+    <div class="text-secondary">
+      <h6 class="fw-bold m-0">30% money back</h6>
+      <p class="m-0">For Order Over $100</p>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ------------------------------------------------------------------------------------------- -->
+
+<div class="container my-3">
+  <div class="d-flex flex-wrap justify-content-start gap-4">
+    <!-- العمود 1 -->
+    <div class="col">
+      <div class="card border-0">
+        <img src="assets/blog-1.jpg" class="card-img-top rounded-3" alt="..." />
+        <div class="card-body px-0">
+          <p class="card_title">Fashion</p>
+          <a href="#" class="card_link"
+            >Clothes Retail KPIs 2021 Guide for Clothes Executives.</a>
+          <p class="text-secondary">
+            By <span class="fw-bold">Mr Admin</span> / Apr 06, 2022
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- العمود 2 -->
+    <div class="col">
+      <div class="card border-0">
+        <img src="assets/blog-2.jpg" class="card-img-top rounded-3" alt="..." />
+        <div class="card-body px-0">
+          <p class="card_title">Clothes</p>
+          <a href="#" class="card_link"
+            >Curbside fashion Trends: How to Win the Pickup Battle.</a
+          >
+          <p class="text-secondary">
+            By <span class="fw-bold">Mr Robin</span> / Jan 18, 2022
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- العمود 3 -->
+    <div class="col">
+      <div class="card border-0">
+        <img src="assets/blog-3.jpg" class="card-img-top rounded-3" alt="..." />
+        <div class="card-body px-0">
+          <p class="card_title">Shoes</p>
+          <a href="#" class="card_link"
+            >EBT vendors: Claim Your Share of SNAP Online Revenue.</a
+          >
+          <p class="text-secondary">
+            By <span class="fw-bold">Mr Selsa</span> / Feb 10, 2022
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- العمود 4 -->
+    <div class="col">
+      <div class="card border-0 w-100">
+        <img src="assets/blog-4.jpg" class="card-img-top rounded-3" alt="..." />
+        <div class="card-body px-0">
+          <p class="card_title">Electronics</p>
+          <a href="#" class="card_link"
+            >Curbside fashion Trends: How to Win the Pickup Battle.</a
+          >
+          <p class="text-secondary">
+            By <span class="fw-bold">Mr Pawar</span> / Mar 15, 2022
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

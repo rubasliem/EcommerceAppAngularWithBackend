@@ -1,0 +1,55 @@
+.container{
+    height: 45px;
+}
+.social-icon {
+  color: #6c757d; // رصاصي (gray من Bootstrap)
+  border: 1px solid #6c757d;
+  border-radius: 0.5rem; // نفس rounded-2
+  padding: 0.20rem; // نفس p-1
+
+  &:hover,
+  &:active,
+  &:focus {
+    color:hsl(353, 100%, 78%);
+    border-color: hsl(353, 100%, 78%);
+    transform: scale(1.1);  
+  }
+}
+
+.badge-heart {
+  position: absolute;
+  top: -5px;
+  left: 20px;
+
+  width: 22px;
+  height: 22px;
+
+  background: rgb(232, 89, 89);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.active{
+    color:hsl(353, 100%, 78%);
+}
+
+
+
+.nav-link{
+  color: #6c757d; // رمادي افتراضي
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-link:hover,
+.nav-link:focus,
+.nav-link.active {
+  color: hsl(353, 100%, 78%); // وردي عند hover أو الضغط
+  transform: scale(1.1); // تأثير خفيف عند التفاعل
+}

@@ -1,0 +1,143 @@
+
+.hero-section {
+  background-image: url("/assets/logo3.jpg");
+  background-size: cover;
+  border-radius: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  width:90% ;
+  height:550px;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;   // الكلام في منتصف الارتفاع
+  align-items: flex-start;    // الكلام في يسار العنصر
+
+  text-align: left;           // محاذاة النصوص لليسار
+  padding-left: 150px;              // يعطي مسافة من الطرف
+
+  .btn{
+  background-color: #000; // رصاصي (gray من Bootstrap)
+  color: white;
+  padding: 10px; // نفس p-1
+
+  &:hover,
+  &:active,
+  &:focus {
+    color:hsl(353, 100%, 78%);
+    transform: scale(1.1);  
+  }
+  }
+}
+
+
+  .card_title{
+    color:hsl(353, 100%, 78%);
+    margin: 0;
+  }
+  .card_link {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    font-size:20px ;
+    &:hover{
+    color:hsl(353, 100%, 78%);
+  }
+}
+
+    .services-icon {
+    color:hsl(353, 100%, 78%);
+    font-weight: bold;
+    text-decoration: none;
+    font-size:39px ;
+    &:hover{
+    color: black;
+  }
+    }
+
+
+.img-circle {
+  width: 80px;
+  height: 80px;
+  object-fit: cover; /* يقص الصورة بحيث تصبح دائرة بدون تشويه */
+  border-radius: 50%;
+  margin: 15px;
+}
+
+.img-quotes{
+  width: 25px;
+  height: 25px;
+  margin-bottom:10px;
+}
+
+.img-col {
+  position: relative;          
+  background-image: url("/assets/cta-banner.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  border: 0;
+}
+.scroll-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1rem;
+  margin-top: 30px;
+
+  -ms-overflow-style: none;  /* IE و Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.card-wrapper {
+  flex: 0 0 25%;            /* 4 كروت في نفس الوقت */
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+}
+
+.custom-flex-container {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.custom-flex-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.category-icon {
+  width: 60px;
+  height: 60px;
+  background-color: #e7eeee;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.text-content h6 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.show-all {
+  text-decoration: none;
+  color: hsl(353, 100%, 78%);
+  font-size: 0.85rem;
+}
+
+.show-all:hover {
+  text-decoration: underline;
+}
