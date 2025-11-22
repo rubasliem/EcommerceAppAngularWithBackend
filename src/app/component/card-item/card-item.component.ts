@@ -1,30 +1,84 @@
-import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { IProduct } from '../../interface/iproduct';
-import { IProduct1 } from '../../interface/iproduct1';
+import { Router } from '@angular/router';
+import { FavoriteService } from '../../service/favorite.service';
+import { CartService } from '../../service/cart.service';
+import { ToastrService } from 'ngx-toastr';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { HoverImageDirective } from '../../directive/hover-image.directive';
 
 @Component({
   selector: 'app-card-item',
   standalone: true,
-  imports: [CurrencyPipe,CommonModule],
+  imports: [CommonModule, CurrencyPipe, HoverImageDirective],
   templateUrl: './card-item.component.html',
-  styleUrl: './card-item.component.scss'
+  styleUrls: ['./card-item.component.scss']
 })
 export class CardItemComponent {
-    @Input() item:any
+  @Input() item: any;
 
-getStars(rate: number | undefined): number[] {
-  if (!rate) return [];             // إذا كان undefined أو 0
-  const fullStars = Math.floor(rate); // تقطيع العدد لأرضى عدد صحيح
-  return Array(fullStars).fill(0);    // مصفوفة عددها fullStars
-}
+  isFav: boolean = false;
+  isInCart: boolean = false;
 
+  constructor(
+    private _FavService: FavoriteService,
+    private _CartService: CartService,
+    private _Toastr: ToastrService,
+    private _Router: Router
+  ) {}
 
-getRatingRate(item: any): number {
-  if (!item.rating) return 0;
-  if (typeof item.rating === 'number') return item.rating;
-  return item.rating.rate || 0;
-}
+  ngOnInit(): void {
+    // تحقق من حالة المنتج في المفضلة والكارت عند التحميل
+    this.isFav = this._FavService.getFavorites().some(p => p.id === this.item.id);
+    this.isInCart = this._CartService.getCartItems().some(p => p.id === this.item.id);
+  }
 
+  // تبديل حالة المفضلة
+  toggleFav() {
+    const added = this._FavService.toggleFavorite(this.item);
+    this.isFav = added;
 
+    if (added) {
+      this._Toastr.success('Product added to favorites ❤️');
+    } else {
+      this._Toastr.warning('Product removed from favorites 💔');
+    }
+
+    // تحديث Navbar أو أي Component آخر
+    window.dispatchEvent(new Event('favorite-updated'));
+  }
+
+  // تبديل حالة الكارت
+  toggleCart() {
+    const added = this._CartService.toggleCart(this.item);
+    this.isInCart = added;
+
+    if (added) {
+      this._Toastr.success('Product added to cart 🛒');
+    } else {
+      this._Toastr.warning('Product removed from cart ❌');
+    }
+
+    window.dispatchEvent(new Event('cart-updated'));
+  }
+
+  // حفظ حالة المشاهدة والانتقال للصفحة
+  markAsViewed(item: any) {
+    if (typeof window === 'undefined') return; // حماية عند SSR
+
+    let viewed: number[] = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
+    if (!viewed.includes(item.id)) {
+      viewed.push(item.id);
+      localStorage.setItem('viewedProducts', JSON.stringify(viewed));
+    }
+
+    window.dispatchEvent(new Event('view-added'));
+    this._Router.navigate(['/details', item.id]);
+  }
+
+  // تحقق إذا تم مشاهدة المنتج
+  isViewed(id: number): boolean {
+    if (typeof window === 'undefined') return false;
+    const viewed: number[] = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
+    return viewed.includes(id);
+  }
 }

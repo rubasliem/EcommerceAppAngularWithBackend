@@ -1,0 +1,22 @@
+.main-image img {
+  width: 100%;
+  height: 350px;
+  object-fit: contain;
+}
+
+.thumbs img {
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  object-fit: contain;
+  border: 2px solid transparent;
+  transition: 0.2s;
+}
+
+.thumbs img:hover {
+  border-color: #0d6efd;
+}
+
+.active-thumb {
+  border-color: #0d6efd !important;
+}

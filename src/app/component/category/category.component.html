@@ -1,0 +1,8 @@
+
+    <div class="container row mx-auto my-5">
+      <div class="col-md-3 mb-3" *ngFor="let prod of products">
+        <div class="card shadow-lg ">
+            <app-card-item [item]=prod></app-card-item>
+        </div>
+      </div>
+    </div>

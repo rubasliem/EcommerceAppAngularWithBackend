@@ -1,21 +1,35 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IProduct } from '../interface/iproduct';
-import { IProduct1 } from '../interface/iproduct1';
+import { Category, Product } from '../interface/iproduct';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
 
-  constructor(private _HttpClient:HttpClient) { }
+  
+  private apiUrl = 'https://api.escuelajs.co/api/v1/products';
 
-  getProducts():Observable<IProduct[]>{
-    return this._HttpClient.get<IProduct[]>('https://dummyjson.com/products')
+  private apiUrlCat = 'https://api.escuelajs.co/api/v1/categories'
+
+  constructor(private http: HttpClient) {}
+
+  // جلب جميع المنتجات
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl);
   }
 
-    getProducts1():Observable<IProduct1[]>{
-    return this._HttpClient.get<IProduct1[]>('https://fakestoreapi.com/products')
+  // جلب منتج واحد بناءً على id
+  getProductById(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
+    getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.apiUrlCat);
+  }
+    getCategoryProducts(categoryId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrlCat}/${categoryId}/products`);
   }
 }

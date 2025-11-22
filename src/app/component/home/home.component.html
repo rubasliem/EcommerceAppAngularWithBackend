@@ -1,5 +1,7 @@
 <div class="container-fluid mt-3">
+
   <div class="hero-section mx-auto">
+
     <h3 class="text-secondary fw-bold">Trending item</h3>
     <h1 class="fs-1 text-uppercase my-2 fw-bolder text-light">
       Women's latest <br />fashion sale
@@ -8,6 +10,11 @@
       starting at $ <span class="fs-1 fw-bold">20</span>.00
     </h3>
     <button class="btn text-uppercase text-bold px-3">Shop now</button>
+
+    <div class="for-you">
+
+
+  </div>
   </div>
 </div>
 
@@ -35,25 +42,31 @@
   <div class="container my-5">
   <div class="row">
 
-    <!-- Sidebar -->
-     <div class="col-md-3">
-      <div class="sidebar p-3 border rounded">
-    <app-categories></app-categories>
-        </div>
-        </div>
+<!-- Sidebar -->
+<div class="col-md-3">
+  <div class="d-flex flex-column align-items-center">
+    <!-- Sidebar with categories -->
+    <div class="sidebar p-3 border rounded w-100 mb-3">
+      <app-categories></app-categories>
+    </div>
+
+    <!-- Image under the categories -->
+    <img src="assets/salee.webp" alt="sale logo" width="300px" height="800px">
+    <!-- <img src="assets/female.jpg" alt="sale logo" width="310px" height="450px"> -->
+    
+  </div>
+</div>
+
 
     <!-- المنتجات -->
     <div class="col-md-9">
       <div class="row g-3">
-          <div class="col-md-3" *ngFor="let item of protects1">
+          <div class="col-md-3" *ngFor="let item of protects.slice(0,16)">
          <app-card-item [item]="item"></app-card-item>
       </div>
-        <div class="col-md-3" *ngFor="let item of protects">
-          <app-card-item [item]="item"></app-card-item>
-        </div>
     </div>
-
   </div>
+
 </div>
 
 
@@ -83,12 +96,12 @@
 
     <!-- العمود 2 (الوسط) -->
     <div class="img-col col-12 col-md-6">
-      <a><div class="img-card card p-3 text-center">
+      <div class="img-card p-5">
         <button class="btn bg-black text-uppercase text-light fw-bold mb-2">25% Discount</button>
         <h4 class="fw-bold" >Summer Collection</h4>
         <p>Starting &#64; $10</p>
-        <h5 class="text-secondary fw-bold text-uppercase">Shop now</h5>  
-      </div></a>
+        <h5 class="text-secondary fw-bold text-uppercase cursor-pointer">Shop now</h5>  
+      </div>
     </div>
 
     <!-- العمود 3 -->

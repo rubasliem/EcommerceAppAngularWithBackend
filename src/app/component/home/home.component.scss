@@ -49,7 +49,7 @@
     color:hsl(353, 100%, 78%);
     font-weight: bold;
     text-decoration: none;
-    font-size:39px ;
+    font-size:40px ;
     &:hover{
     color: black;
   }
@@ -59,7 +59,7 @@
 .img-circle {
   width: 80px;
   height: 80px;
-  object-fit: cover; /* يقص الصورة بحيث تصبح دائرة بدون تشويه */
+  object-fit: cover; /* يقص الصورة بحيث تصبح دائره */
   border-radius: 50%;
   margin: 15px;
 }
@@ -71,14 +71,30 @@
 }
 
 .img-col {
-  position: relative;          
+  position: relative;
   background-image: url("/assets/cta-banner.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 10px;
-  border: 0;
+  
+  display: flex;              /* مهم */
+  justify-content: center;    /* توسيط أفقي */
+  align-items: center;        /* توسيط عمودي */
 }
+
+.img-card {
+  display: flex;              /* مهم */
+  flex-direction: column;     /* ترتيب العناصر فوق بعض */
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  background: rgba(255,255,255,0.7); /* اختياري */
+  border-radius: 10px;
+}
+
+
+
 .scroll-container {
   display: flex;
   gap: 1rem;

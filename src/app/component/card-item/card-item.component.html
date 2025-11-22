@@ -1,24 +1,35 @@
 <div class="card position-relative text-center h-100 border-1" style="cursor:pointer">
   <div class="image-wrapper position-relative">
+
     <img
-      [src]="item.images ? item.images[0] : item.image ? item.image : '/assets/handWash.jpg'"
+      [src]="item.images[0]"
+      [appHoverImage]="item.images[1]"
       class="card-img-top product-img"
       alt="{{item.title}}"
     />
 
     <div class="icon-menu d-flex flex-column">
-      <button class="icon-btn"><i class="bi bi-eye"></i></button>
-      <button class="icon-btn"><i class="bi bi-bag"></i></button>
-      <button class="icon-btn"><i class="bi bi-heart"></i></button>
+      <!-- Eye: عرض التفاصيل -->
+      <button class="icon-btn" (click)="markAsViewed(item)">
+        <i class="bi" [ngClass]="isViewed(item.id) ? 'bi-eye-fill text-info' : 'bi-eye'"></i>
+      </button>
+
+      <!-- Bag: إضافة/إزالة من الكارت -->
+      <button class="icon-btn" (click)="toggleCart()">
+        <i class="bi" [ngClass]="isInCart ? 'bi-bag-fill text-success' : 'bi-bag text-dark'"></i>
+      </button>
+
+      <!-- Heart: إضافة/إزالة من المفضلة -->
+      <button class="icon-btn" (click)="toggleFav()">
+        <i class="bi" [ngClass]="isFav ? 'bi-heart-fill text-danger' : 'bi-heart text-dark'"></i>
+      </button>
     </div>
   </div>
 
   <div class="card-body pt-0 left-text">
     <div class="d-flex justify-content-between">
-      <p style="color: hsl(353, 100%, 78%)">{{ item.category }}</p>
-      <p class="text-end">
-        ({{ item.stock || item.rating?.count || '0' }})
-      </p>
+      <p style="color: hsl(353, 100%, 78%)">{{ item.category.name }}</p>
+      <p class="text-end">({{item.id}})</p>
     </div>
 
     <p class="text-secondary text-start">{{ item.title || 'Hand Wash' }}</p>
@@ -31,10 +42,9 @@
     </div>
 
     <div class="d-flex align-items-center gap-2">
-      <ng-container *ngFor="let star of getStars(getRatingRate(item))">
-        <i class="bi bi-star-fill text-warning"></i>
-      </ng-container>
-      <i class="bi bi-star-half  text-warning"></i>
+      <!-- النجوم -->
+      <i class="bi bi-star-fill text-warning" *ngFor="let s of [].constructor(4); index as i"></i>
+      <i class="bi bi-star-half text-warning"></i>
     </div>
   </div>
 </div>
