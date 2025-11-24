@@ -38,9 +38,9 @@ export class CardItemComponent {
     this.isFav = added;
 
     if (added) {
-      this._Toastr.success('Product added to favorites ❤️');
+      this._Toastr.success('Product added to favorites ❤️','success');
     } else {
-      this._Toastr.warning('Product removed from favorites 💔');
+      this._Toastr.warning('Product removed from favorites 💔','warning');
     }
 
     // تحديث Navbar أو أي Component آخر
@@ -63,8 +63,12 @@ export class CardItemComponent {
 
   // حفظ حالة المشاهدة والانتقال للصفحة
   markAsViewed(item: any) {
-    if (typeof window === 'undefined') return; // حماية عند SSR
+    // تحقق من وجود العنصر والـ ID
+    if (!item || !item.id) return;
+    // تحقق من وجود localStorage
+    if (typeof window === 'undefined' || !window.localStorage) return;
 
+    try{
     let viewed: number[] = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
     if (!viewed.includes(item.id)) {
       viewed.push(item.id);
@@ -73,12 +77,23 @@ export class CardItemComponent {
 
     window.dispatchEvent(new Event('view-added'));
     this._Router.navigate(['/details', item.id]);
-  }
+
+    } catch (error) {
+      console.error('Error saving viewed product:', error);
+      this._Toastr.error('Failed to save viewed product. Please try again.');
+    }
+}
 
   // تحقق إذا تم مشاهدة المنتج
   isViewed(id: number): boolean {
-    if (typeof window === 'undefined') return false;
+  if (typeof window === 'undefined' || !window.localStorage) return false;
+  try {
     const viewed: number[] = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
     return viewed.includes(id);
+  } catch {
+    return false;
   }
+}
+
+
 }

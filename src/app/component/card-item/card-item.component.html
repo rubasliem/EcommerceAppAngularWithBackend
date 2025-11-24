@@ -1,12 +1,13 @@
 <div class="card position-relative text-center h-100 border-1" style="cursor:pointer">
   <div class="image-wrapper position-relative">
 
-    <img
-      [src]="item.images[0]"
-      [appHoverImage]="item.images[1]"
-      class="card-img-top product-img"
-      alt="{{item.title}}"
-    />
+  <img
+  [src]="item.images[0] || 'assets/lady.jpg'"  
+  [appHoverImage]="item.images[1] || 'assets/lady.jpg'" 
+  class="card-img-top product-img"
+  [alt]="item.title || 'Product'"
+/>
+
 
     <div class="icon-menu d-flex flex-column">
       <!-- Eye: عرض التفاصيل -->

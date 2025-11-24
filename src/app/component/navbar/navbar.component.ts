@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FavoriteService } from '../../service/favorite.service';
 import { count } from 'console';
@@ -14,7 +14,7 @@ import { Category, Product } from '../../interface/iproduct';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
 
     @Input() item: any;
  favCount: number = 0;
@@ -24,7 +24,7 @@ categories: Category[] = [];
 
 
 constructor(private _FavService: FavoriteService,
-  private _CartService :CartService,
+private _CartService: CartService,
   private _CategoryService:ProductsService,
 private _Router:Router) {}
 
@@ -60,6 +60,10 @@ private _Router:Router) {}
   }
 
   updateViewedCount() {
+    if (typeof window === 'undefined' || !window.localStorage) {
+    this.viewCount = 0;
+    return;
+  }
     const viewed = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
     this.viewCount = viewed.length;
   }
