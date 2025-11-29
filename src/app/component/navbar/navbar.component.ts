@@ -6,11 +6,12 @@ import { count } from 'console';
 import { CartService } from '../../service/cart.service';
 import { ProductsService } from '../../service/products.service';
 import { Category, Product } from '../../interface/iproduct';
+import { InputSearchComponent } from "../input-search/input-search.component";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule,RouterLink,RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, InputSearchComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -35,7 +36,7 @@ private _Router:Router) {}
     this.updateCartCount();
 
      this._CategoryService.getCategories().subscribe({
-      next: (cats) => this.categories = cats,
+      next: (cats) => this.categories = cats.slice(0,5),
       error: (err) => console.error(err)
     });
 

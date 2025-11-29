@@ -1,0 +1,16 @@
+.input_container{
+    margin-left: 27.5rem;
+
+input.form-control {
+  background-color: #f8f9fa;  // خلفية فاتحة
+  border: 1px solid #ced4da;
+  padding: 12px 20px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color:hsl(353, 100%, 78%);
+    box-shadow: 0 0 8px hsl(353, 100%, 78%);
+    background-color: #fff;
+  }
+}
+}
