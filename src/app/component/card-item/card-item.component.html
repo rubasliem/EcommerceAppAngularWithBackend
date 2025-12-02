@@ -42,7 +42,9 @@
       <p style="color: hsl(353, 100%, 78%)">
         {{ item.category || "Category" }}
       </p>
-      <p class="text-end">({{ item.id }})</p>
+      <p class="text-end" *ngIf="getRatingCount() > 0">
+        ({{ getRatingCount() }})
+      </p>
     </div>
 
     <p class="text-secondary text-start">{{ item.title || "Hand Wash" }}</p>
@@ -54,13 +56,18 @@
       </h5>
     </div>
 
-    <div class="d-flex align-items-center gap-2">
-      <!-- النجوم -->
+    <div class="d-flex align-items-center gap-1">
+      <!-- النجوم الكاملة -->
       <i
         class="bi bi-star-fill text-warning"
-        *ngFor="let s of [].constructor(4); index as i"
+        *ngFor="let s of getFullStars()"
       ></i>
-      <i class="bi bi-star-half text-warning"></i>
+      <!-- نصف نجمة -->
+      <i class="bi bi-star-half text-warning" *ngIf="hasHalfStar()"></i>
+      <!-- النجوم الفارغة -->
+      <i class="bi bi-star text-warning" *ngFor="let s of getEmptyStars()"></i>
+      <!-- عدد التقييمات -->
+      <span class="text-muted small" *ngIf="getRatingCount() > 0"></span>
     </div>
   </div>
 </div>

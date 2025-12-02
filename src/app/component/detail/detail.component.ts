@@ -17,7 +17,9 @@ export class DetailComponent {
 
   product: Product | undefined;
   selectedImage: string = '';   // الصورة المعروضة
+  selectedImageIndex: number = 0;  // رقم الصورة المختارة
   isFav: boolean = false;
+  displayImages: string[] = [];  // الصور الثلاث للعرض
 
   constructor(
     private route: ActivatedRoute,
@@ -39,15 +41,63 @@ export class DetailComponent {
     this.productService.getProductById(Number(id)).subscribe({
       next: (data) => {
         this.product = data;
-        this.selectedImage = data.images?.[0] || data.image || ''; // الصورة الافتراضية
+        const mainImage = data.images?.[0] || data.image || '';
+        
+        // إنشاء الصور الثلاث
+        this.createImageVariants(mainImage);
+        
         window.scrollTo({ top: 0, behavior: 'smooth' }); // تمرير الصفحة لأعلى
       },
       error: (err) => console.error(err)
     });
   }
 
-  changeImage(img: string) {
-    this.selectedImage = img;
+  // دالة لإنشاء 3 صور: الأصلية، النصف الأيمن، النصف الأيسر
+  createImageVariants(imageUrl: string) {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      if (!ctx) return;
+
+      const width = img.width;
+      const height = img.height;
+      const halfWidth = width / 2;
+
+      // الصورة الأولى: الصورة الكاملة الأصلية
+      this.displayImages[0] = imageUrl;
+
+      // الصورة الثانية: النصف الأيمن
+      canvas.width = halfWidth;
+      canvas.height = height;
+      ctx.drawImage(img, halfWidth, 0, halfWidth, height, 0, 0, halfWidth, height);
+      this.displayImages[1] = canvas.toDataURL();
+
+      // الصورة الثالثة: النصف الأيسر
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, halfWidth, height, 0, 0, halfWidth, height);
+      this.displayImages[2] = canvas.toDataURL();
+
+      // تعيين الصورة المختارة الافتراضية
+      this.selectedImage = this.displayImages[0];
+      this.selectedImageIndex = 0;
+    };
+    
+    img.onerror = () => {
+      // في حالة فشل التحميل، استخدم الصورة الأصلية للجميع
+      this.displayImages = [imageUrl, imageUrl, imageUrl];
+      this.selectedImage = imageUrl;
+      this.selectedImageIndex = 0;
+    };
+    
+    img.src = imageUrl;
+  }
+
+  changeImage(index: number) {
+    this.selectedImage = this.displayImages[index];
+    this.selectedImageIndex = index;
   }
 
    addToCart() {

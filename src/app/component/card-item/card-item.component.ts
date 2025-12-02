@@ -27,9 +27,11 @@ export class CardItemComponent {
   ) {}
 
   ngOnInit(): void {
-    // تحقق من حالة المنتج في المفضلة والكارت عند التحميل
-    this.isFav = this._FavService.getFavorites().some(p => p.id === this.item.id);
-    this.isInCart = this._CartService.getCartItems().some(p => p.id === this.item.id);
+    // تحقق من حالة المنتج في المفضلة والكارت عند التحميل (فقط في المتصفح)
+    if (typeof window !== 'undefined') {
+      this.isFav = this._FavService.getFavorites().some(p => p.id === this.item.id);
+      this.isInCart = this._CartService.getCartItems().some(p => p.id === this.item.id);
+    }
   }
 
   // تبديل حالة المفضلة
@@ -44,7 +46,9 @@ export class CardItemComponent {
     }
 
     // تحديث Navbar أو أي Component آخر
-    window.dispatchEvent(new Event('favorite-updated'));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('favorite-updated'));
+    }
   }
 
   // تبديل حالة الكارت
@@ -58,7 +62,9 @@ export class CardItemComponent {
       this._Toastr.warning('Product removed from cart ❌');
     }
 
-    window.dispatchEvent(new Event('cart-updated'));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('cart-updated'));
+    }
   }
 
   // حفظ حالة المشاهدة والانتقال للصفحة
@@ -66,23 +72,26 @@ export class CardItemComponent {
     // تحقق من وجود العنصر والـ ID
     if (!item || !item.id) return;
     // تحقق من وجود localStorage
-    if (typeof window === 'undefined' || !window.localStorage) return;
-
-    try{
-    let viewed: number[] = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
-    if (!viewed.includes(item.id)) {
-      viewed.push(item.id);
-      localStorage.setItem('viewedProducts', JSON.stringify(viewed));
+    if (typeof window === 'undefined' || !window.localStorage) {
+      this._Router.navigate(['/details', item.id]);
+      return;
     }
 
-    window.dispatchEvent(new Event('view-added'));
-    this._Router.navigate(['/details', item.id]);
+    try {
+      let viewed: number[] = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
+      if (!viewed.includes(item.id)) {
+        viewed.push(item.id);
+        localStorage.setItem('viewedProducts', JSON.stringify(viewed));
+      }
+
+      window.dispatchEvent(new Event('view-added'));
+      this._Router.navigate(['/details', item.id]);
 
     } catch (error) {
       console.error('Error saving viewed product:', error);
       this._Toastr.error('Failed to save viewed product. Please try again.');
     }
-}
+  }
 
   // تحقق إذا تم مشاهدة المنتج
   isViewed(id: number): boolean {
@@ -95,5 +104,36 @@ export class CardItemComponent {
   }
 }
 
+  // الحصول على التقييم
+  getRating(): number {
+    if (!this.item || !this.item.rating) return 0;
+    return typeof this.item.rating === 'number' ? this.item.rating : this.item.rating.rate || 0;
+  }
+
+  // عدد النجوم الكاملة
+  getFullStars(): number[] {
+    const rating = this.getRating();
+    return Array(Math.floor(rating)).fill(0);
+  }
+
+  // هل يوجد نصف نجمة
+  hasHalfStar(): boolean {
+    const rating = this.getRating();
+    return rating % 1 >= 0.5;
+  }
+
+  // عدد النجوم الفارغة
+  getEmptyStars(): number[] {
+    const rating = this.getRating();
+    const fullStars = Math.floor(rating);
+    const halfStar = this.hasHalfStar() ? 1 : 0;
+    return Array(5 - fullStars - halfStar).fill(0);
+  }
+
+  // عدد التقييمات
+  getRatingCount(): number {
+    if (!this.item || !this.item.rating) return 0;
+    return typeof this.item.rating === 'object' ? this.item.rating.count || 0 : 0;
+  }
 
 }

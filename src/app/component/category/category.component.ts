@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../service/products.service';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { CardItemComponent } from "../card-item/card-item.component";
 import { SearchPipe } from '../../pipe/search.pipe';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe, FormsModule, CardItemComponent,SearchPipe],
+  imports: [CommonModule, FormsModule, CardItemComponent, SearchPipe],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
 })
