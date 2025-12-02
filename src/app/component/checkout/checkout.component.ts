@@ -29,6 +29,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   cardMounted: boolean = false;
   
   countries: string[] = [
+    'Egypt',
     'United States',
     'Canada',
     'United Kingdom',
