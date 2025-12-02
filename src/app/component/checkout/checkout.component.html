@@ -1,0 +1,507 @@
+<div class="checkout-container">
+  <div class="container py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold mb-2">Checkout</h1>
+      <p class="text-muted">Complete your purchase in just a few steps</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Left Side - Form -->
+      <div class="col-lg-7">
+        <!-- Progress Steps -->
+        <div class="progress-steps mb-4">
+          <div
+            class="step"
+            [class.active]="currentStep >= 1"
+            [class.completed]="currentStep > 1"
+          >
+            <div class="step-icon">
+              <i
+                class="bi"
+                [class.bi-check-circle-fill]="currentStep > 1"
+                [class.bi-person-fill]="currentStep <= 1"
+              ></i>
+            </div>
+            <span class="step-label">Personal Info</span>
+          </div>
+          <div class="step-line" [class.completed]="currentStep > 1"></div>
+          <div
+            class="step"
+            [class.active]="currentStep >= 2"
+            [class.completed]="currentStep > 2"
+          >
+            <div class="step-icon">
+              <i
+                class="bi"
+                [class.bi-check-circle-fill]="currentStep > 2"
+                [class.bi-geo-alt-fill]="currentStep <= 2"
+              ></i>
+            </div>
+            <span class="step-label">Shipping</span>
+          </div>
+          <div class="step-line" [class.completed]="currentStep > 2"></div>
+          <div class="step" [class.active]="currentStep >= 3">
+            <div class="step-icon">
+              <i class="bi bi-credit-card-fill"></i>
+            </div>
+            <span class="step-label">Payment</span>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="checkoutForm" class="checkout-form">
+          <!-- Step 1: Personal Information -->
+          <div *ngIf="currentStep === 1" class="form-section animate-in">
+            <h3 class="section-title">
+              <i class="bi bi-person-circle me-2"></i>
+              Personal Information
+            </h3>
+            <div class="card shadow-sm">
+              <div class="card-body p-4">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >First Name <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="firstName"
+                      [class.is-invalid]="
+                        f['firstName'].invalid && f['firstName'].touched
+                      "
+                      placeholder="John"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="f['firstName'].invalid && f['firstName'].touched"
+                    >
+                      First name is required (min 2 characters)
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >Last Name <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="lastName"
+                      [class.is-invalid]="
+                        f['lastName'].invalid && f['lastName'].touched
+                      "
+                      placeholder="Doe"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="f['lastName'].invalid && f['lastName'].touched"
+                    >
+                      Last name is required (min 2 characters)
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >Email Address <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      formControlName="email"
+                      [class.is-invalid]="
+                        f['email'].invalid && f['email'].touched
+                      "
+                      placeholder="john.doe@example.com"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="f['email'].invalid && f['email'].touched"
+                    >
+                      Please enter a valid email address
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >Phone Number <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="tel"
+                      class="form-control"
+                      formControlName="phone"
+                      [class.is-invalid]="
+                        f['phone'].invalid && f['phone'].touched
+                      "
+                      placeholder="1234567890"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="f['phone'].invalid && f['phone'].touched"
+                    >
+                      Phone number must be 10-15 digits
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg"
+                (click)="nextStep()"
+              >
+                Next Step <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Shipping Address -->
+          <div *ngIf="currentStep === 2" class="form-section animate-in">
+            <h3 class="section-title">
+              <i class="bi bi-geo-alt-fill me-2"></i>
+              Shipping Address
+            </h3>
+            <div class="card shadow-sm">
+              <div class="card-body p-4">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label"
+                      >Street Address <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="address"
+                      [class.is-invalid]="
+                        f['address'].invalid && f['address'].touched
+                      "
+                      placeholder="123 Main Street, Apt 4B"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="f['address'].invalid && f['address'].touched"
+                    >
+                      Address is required (min 5 characters)
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >City <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="city"
+                      [class.is-invalid]="
+                        f['city'].invalid && f['city'].touched
+                      "
+                      placeholder="New York"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="f['city'].invalid && f['city'].touched"
+                    >
+                      City is required
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >State <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="state"
+                      [class.is-invalid]="
+                        f['state'].invalid && f['state'].touched
+                      "
+                      placeholder="NY"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="f['state'].invalid && f['state'].touched"
+                    >
+                      State is required
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >ZIP Code <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="zipCode"
+                      [class.is-invalid]="
+                        f['zipCode'].invalid && f['zipCode'].touched
+                      "
+                      placeholder="10001"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="f['zipCode'].invalid && f['zipCode'].touched"
+                    >
+                      ZIP code must be 5 digits
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label"
+                      >Country <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      list="countries-list"
+                      formControlName="country"
+                      [class.is-invalid]="
+                        f['country'].invalid && f['country'].touched
+                      "
+                      placeholder="Select or type country name"
+                    />
+                    <datalist id="countries-list">
+                      <option
+                        *ngFor="let country of countries"
+                        [value]="country"
+                      ></option>
+                    </datalist>
+
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="f['country'].invalid && f['country'].touched"
+                    >
+                      Country is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-lg"
+                (click)="prevStep()"
+              >
+                <i class="bi bi-arrow-left me-2"></i> Previous
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary btn-lg"
+                (click)="nextStep()"
+              >
+                Next Step <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Payment -->
+          <div *ngIf="currentStep === 3" class="form-section animate-in">
+            <h3 class="section-title">
+              <i class="bi bi-credit-card-fill me-2"></i>
+              Payment Information
+            </h3>
+            <div class="card shadow-sm">
+              <div class="card-body p-4">
+                <div class="mb-4">
+                  <label class="form-label fw-bold"
+                    >Card Details <span class="text-danger">*</span></label
+                  >
+                  <div id="card-element"></div>
+                  <div class="form-text mt-2">
+                    <i class="bi bi-shield-check me-1"></i>
+                    Your payment information is secure and encrypted
+                  </div>
+                  <div class="alert alert-info mt-2 mb-0 py-2 px-3">
+                    <small>
+                      <strong>Test Card:</strong> 4242 4242 4242 4242 | Exp: Any
+                      future date | CVC: Any 3 digits
+                    </small>
+                  </div>
+                </div>
+
+                <div class="payment-icons mb-3">
+                  <i class="bi bi-credit-card-2-front"></i>
+                  <span>We accept:</span>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg"
+                    alt="Visa"
+                    height="20"
+                  />
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                    alt="Mastercard"
+                    height="20"
+                  />
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg"
+                    alt="Amex"
+                    height="20"
+                  />
+                </div>
+
+                <hr class="my-4" />
+
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="saveInfo"
+                    id="saveInfo"
+                  />
+                  <label class="form-check-label" for="saveInfo">
+                    Save my information for faster checkout next time
+                  </label>
+                </div>
+
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="newsletter"
+                    id="newsletter"
+                  />
+                  <label class="form-check-label" for="newsletter">
+                    Send me exclusive offers and updates
+                  </label>
+                </div>
+
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="termsAccepted"
+                    id="termsAccepted"
+                    [class.is-invalid]="
+                      f['termsAccepted'].invalid && f['termsAccepted'].touched
+                    "
+                  />
+                  <label class="form-check-label" for="termsAccepted">
+                    I agree to the
+                    <a href="#" class="text-primary">Terms & Conditions</a>
+                    <span class="text-danger">*</span>
+                  </label>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      f['termsAccepted'].invalid && f['termsAccepted'].touched
+                    "
+                  >
+                    You must accept the terms and conditions
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-3">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-lg"
+                (click)="prevStep()"
+              >
+                <i class="bi bi-arrow-left me-2"></i> Previous
+              </button>
+              <button
+                type="button"
+                class="btn btn-success btn-lg px-5"
+                (click)="processPayment()"
+                [disabled]="isProcessing || !checkoutForm.valid"
+              >
+                <span *ngIf="!isProcessing">
+                  <i class="bi bi-lock-fill me-2"></i>
+                  Pay ${{ getFinalTotal().toFixed(2) }}
+                </span>
+                <span *ngIf="isProcessing">
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                  Processing...
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right Side - Order Summary -->
+      <div class="col-lg-5">
+        <div class="order-summary-sticky">
+          <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+              <h4 class="mb-0">
+                <i class="bi bi-cart-check me-2"></i>
+                Order Summary
+              </h4>
+            </div>
+            <div class="card-body">
+              <!-- Products -->
+              <div class="order-items mb-3">
+                <div *ngFor="let item of cart" class="order-item">
+                  <img
+                    [src]="item.images[0]"
+                    [alt]="item.title"
+                    class="order-item-img"
+                  />
+                  <div class="order-item-details">
+                    <h6 class="mb-1">{{ item.title }}</h6>
+                    <small class="text-muted">Qty: {{ item.quantity }}</small>
+                  </div>
+                  <div class="order-item-price">
+                    {{ item.price * item.quantity | currency : "USD" }}
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+
+              <!-- Price Breakdown -->
+              <div class="price-breakdown">
+                <div class="price-row">
+                  <span>Subtotal</span>
+                  <span>{{ getTotal() | currency : "USD" }}</span>
+                </div>
+                <div class="price-row">
+                  <span>Shipping</span>
+                  <span [class.text-success]="getShipping() === 0">
+                    {{
+                      getShipping() === 0
+                        ? "FREE"
+                        : (getShipping() | currency : "USD")
+                    }}
+                  </span>
+                </div>
+                <div class="price-row">
+                  <span>Tax (8%)</span>
+                  <span>{{ getTax() | currency : "USD" }}</span>
+                </div>
+                <hr />
+                <div class="price-row total">
+                  <strong>Total</strong>
+                  <strong class="text-success">{{
+                    getFinalTotal() | currency : "USD"
+                  }}</strong>
+                </div>
+              </div>
+
+              <!-- Free Shipping Badge -->
+              <div
+                *ngIf="getTotal() > 100"
+                class="alert alert-success mt-3 mb-0"
+              >
+                <i class="bi bi-truck me-2"></i>
+                You've qualified for FREE shipping!
+              </div>
+              <div *ngIf="getTotal() <= 100" class="alert alert-info mt-3 mb-0">
+                <i class="bi bi-info-circle me-2"></i>
+                Add ${{ (101 - getTotal()).toFixed(2) }} more for FREE shipping
+              </div>
+            </div>
+          </div>
+
+          <!-- Security Badge -->
+          <div class="text-center mt-3">
+            <small class="text-muted">
+              <i class="bi bi-shield-lock-fill me-1"></i>
+              Secure SSL Encrypted Payment
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

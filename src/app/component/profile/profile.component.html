@@ -1,0 +1,389 @@
+<div class="profile-container">
+  <div class="container py-5">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3 mb-4">
+        <div class="profile-sidebar">
+          <div class="user-avatar-section text-center mb-4">
+            <div
+              class="avatar-circle"
+              [style.background-image]="
+                imagePreview || user?.profileImage
+                  ? 'url(' + (imagePreview || user?.profileImage) + ')'
+                  : 'none'
+              "
+            >
+              <i
+                class="bi bi-person-fill"
+                *ngIf="!imagePreview && !user?.profileImage"
+              ></i>
+            </div>
+            <h5 class="mt-3 mb-1 fw-bold" *ngIf="user">{{ user.name }}</h5>
+            <p class="text-muted small" *ngIf="user">{{ user.email }}</p>
+          </div>
+
+          <div class="sidebar-menu">
+            <button
+              class="menu-item"
+              [class.active]="activeTab === 'profile'"
+              (click)="setActiveTab('profile')"
+            >
+              <i class="bi bi-person me-2"></i>
+              Profile Info
+            </button>
+            <button
+              class="menu-item"
+              [class.active]="activeTab === 'password'"
+              (click)="setActiveTab('password')"
+            >
+              <i class="bi bi-shield-lock me-2"></i>
+              Change Password
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-9">
+        <!-- Loading State -->
+        <div *ngIf="isLoading && !user" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-3 text-muted">Loading profile...</p>
+        </div>
+
+        <!-- Profile Info Tab -->
+        <div
+          class="content-card"
+          *ngIf="!isLoading || user"
+          [hidden]="activeTab !== 'profile'"
+        >
+          <div class="card-header">
+            <h4 class="mb-0">
+              <i class="bi bi-person-badge me-2"></i>
+              Profile Information
+            </h4>
+          </div>
+
+          <div class="card-body">
+            <!-- View Mode -->
+            <div *ngIf="!isEditMode">
+              <div class="info-row">
+                <div class="info-label">
+                  <i class="bi bi-person me-2"></i>Full Name
+                </div>
+                <div class="info-value">{{ user?.name }}</div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">
+                  <i class="bi bi-envelope me-2"></i>Email Address
+                </div>
+                <div class="info-value">{{ user?.email }}</div>
+              </div>
+
+              <div class="info-row">
+                <div class="info-label">
+                  <i class="bi bi-calendar me-2"></i>Member Since
+                </div>
+                <div class="info-value">{{ formatDate(user?.createdAt) }}</div>
+              </div>
+
+              <div class="info-row" *ngIf="user?.isAdmin">
+                <div class="info-label">
+                  <i class="bi bi-shield-check me-2"></i>Account Type
+                </div>
+                <div class="info-value">
+                  <span class="badge bg-success">Administrator</span>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <button class="btn btn-primary" (click)="toggleEditMode()">
+                  <i class="bi bi-pencil me-2"></i>Edit Profile
+                </button>
+              </div>
+            </div>
+
+            <!-- Edit Mode -->
+            <div *ngIf="isEditMode">
+              <form [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()">
+                <!-- Profile Image Upload -->
+                <div class="mb-4 text-center">
+                  <div class="profile-image-upload">
+                    <div
+                      class="image-preview-wrapper"
+                      (click)="fileInput.click()"
+                    >
+                      <div
+                        class="image-preview"
+                        [style.background-image]="
+                          imagePreview
+                            ? 'url(' + imagePreview + ')'
+                            : user?.profileImage
+                            ? 'url(' + user.profileImage + ')'
+                            : 'none'
+                        "
+                      >
+                        <i
+                          class="bi bi-person-fill"
+                          *ngIf="!imagePreview && !user?.profileImage"
+                        ></i>
+                      </div>
+                      <div class="upload-overlay">
+                        <i class="bi bi-camera-fill"></i>
+                        <span>Change Photo</span>
+                      </div>
+                    </div>
+                    <input
+                      #fileInput
+                      type="file"
+                      accept="image/*"
+                      (change)="onFileSelected($event)"
+                      style="display: none"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-primary mt-2"
+                      (click)="fileInput.click()"
+                    >
+                      <i class="bi bi-upload me-2"></i>Upload Photo
+                    </button>
+                    <p class="text-muted small mt-2 mb-0">
+                      Click button or image to upload
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">
+                    <i class="bi bi-person me-2"></i>Full Name
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    [class.is-invalid]="
+                      pf['name'].invalid && pf['name'].touched
+                    "
+                  />
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="pf['name'].invalid && pf['name'].touched"
+                  >
+                    <span *ngIf="pf['name'].errors?.['required']"
+                      >Name is required</span
+                    >
+                    <span *ngIf="pf['name'].errors?.['minlength']"
+                      >Name must be at least 2 characters</span
+                    >
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">
+                    <i class="bi bi-envelope me-2"></i>Email Address
+                  </label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="email"
+                    [class.is-invalid]="
+                      pf['email'].invalid && pf['email'].touched
+                    "
+                  />
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="pf['email'].invalid && pf['email'].touched"
+                  >
+                    <span *ngIf="pf['email'].errors?.['required']"
+                      >Email is required</span
+                    >
+                    <span *ngIf="pf['email'].errors?.['email']"
+                      >Please enter a valid email</span
+                    >
+                  </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                  <button
+                    type="submit"
+                    class="btn btn-success"
+                    [disabled]="isLoading"
+                  >
+                    <span *ngIf="!isLoading">
+                      <i class="bi bi-check-circle me-2"></i>Save Changes
+                    </span>
+                    <span *ngIf="isLoading">
+                      <span
+                        class="spinner-border spinner-border-sm me-2"
+                      ></span>
+                      Saving...
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    (click)="toggleEditMode()"
+                    [disabled]="isLoading"
+                  >
+                    <i class="bi bi-x-circle me-2"></i>Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Change Password Tab -->
+        <div
+          class="content-card"
+          *ngIf="!isLoading || user"
+          [hidden]="activeTab !== 'password'"
+        >
+          <div class="card-header">
+            <h4 class="mb-0">
+              <i class="bi bi-shield-lock me-2"></i>
+              Change Password
+            </h4>
+          </div>
+
+          <div class="card-body">
+            <div class="alert alert-info mb-4">
+              <i class="bi bi-info-circle me-2"></i>
+              Password must be at least 6 characters long
+            </div>
+
+            <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+              <div class="mb-3">
+                <label class="form-label">
+                  <i class="bi bi-lock me-2"></i>Current Password
+                </label>
+                <div class="password-input-wrapper">
+                  <input
+                    [type]="showCurrentPassword ? 'text' : 'password'"
+                    class="form-control"
+                    formControlName="currentPassword"
+                    [class.is-invalid]="
+                      pwf['currentPassword'].invalid &&
+                      pwf['currentPassword'].touched
+                    "
+                    placeholder="Enter current password"
+                  />
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    (click)="toggleCurrentPassword()"
+                  >
+                    <i
+                      class="bi"
+                      [class.bi-eye]="!showCurrentPassword"
+                      [class.bi-eye-slash]="showCurrentPassword"
+                    ></i>
+                  </button>
+                </div>
+                <div
+                  class="invalid-feedback d-block"
+                  *ngIf="
+                    pwf['currentPassword'].invalid &&
+                    pwf['currentPassword'].touched
+                  "
+                >
+                  Current password is required
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">
+                  <i class="bi bi-lock-fill me-2"></i>New Password
+                </label>
+                <div class="password-input-wrapper">
+                  <input
+                    [type]="showNewPassword ? 'text' : 'password'"
+                    class="form-control"
+                    formControlName="newPassword"
+                    [class.is-invalid]="
+                      pwf['newPassword'].invalid && pwf['newPassword'].touched
+                    "
+                    placeholder="Enter new password"
+                  />
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    (click)="toggleNewPassword()"
+                  >
+                    <i
+                      class="bi"
+                      [class.bi-eye]="!showNewPassword"
+                      [class.bi-eye-slash]="showNewPassword"
+                    ></i>
+                  </button>
+                </div>
+                <div
+                  class="invalid-feedback d-block"
+                  *ngIf="
+                    pwf['newPassword'].invalid && pwf['newPassword'].touched
+                  "
+                >
+                  <span *ngIf="pwf['newPassword'].errors?.['required']"
+                    >New password is required</span
+                  >
+                  <span *ngIf="pwf['newPassword'].errors?.['minlength']"
+                    >Password must be at least 6 characters</span
+                  >
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">
+                  <i class="bi bi-lock-fill me-2"></i>Confirm New Password
+                </label>
+                <div class="password-input-wrapper">
+                  <input
+                    [type]="showConfirmPassword ? 'text' : 'password'"
+                    class="form-control"
+                    formControlName="confirmPassword"
+                    [class.is-invalid]="(pwf['confirmPassword'].invalid && pwf['confirmPassword'].touched) || passwordForm.errors?.['passwordMismatch']"
+                    placeholder="Confirm new password"
+                  />
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    (click)="toggleConfirmPassword()"
+                  >
+                    <i
+                      class="bi"
+                      [class.bi-eye]="!showConfirmPassword"
+                      [class.bi-eye-slash]="showConfirmPassword"
+                    ></i>
+                  </button>
+                </div>
+                <div
+                  class="invalid-feedback d-block"
+                  *ngIf="passwordForm.errors?.['passwordMismatch'] && pwf['confirmPassword'].touched"
+                >
+                  Passwords do not match
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="isLoading"
+              >
+                <span *ngIf="!isLoading">
+                  <i class="bi bi-check-circle me-2"></i>Update Password
+                </span>
+                <span *ngIf="isLoading">
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                  Updating...
+                </span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -53,3 +53,71 @@
   color: hsl(353, 100%, 78%); // وردي عند hover أو الضغط
   transform: scale(1.1); // تأثير خفيف عند التفاعل
 }
+
+// User dropdown styles
+.user-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-toggle::after {
+  margin-left: 0.5rem;
+}
+
+.dropdown-menu {
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  border: none;
+  margin-top: 0.5rem;
+  min-width: 200px;
+
+  .dropdown-item {
+    padding: 0.75rem 1.25rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+
+    i {
+      font-size: 1.1rem;
+    }
+
+    &:hover {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      transform: translateX(5px);
+    }
+
+    &.text-danger:hover {
+      background: linear-gradient(135deg, #f85032 0%, #e73827 100%);
+      color: white !important;
+    }
+  }
+
+  .dropdown-divider {
+    margin: 0.5rem 0;
+  }
+}
+
+// User avatar in navbar
+.user-avatar-small {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  i {
+    font-size: 1.2rem;
+    color: white;
+  }
+}

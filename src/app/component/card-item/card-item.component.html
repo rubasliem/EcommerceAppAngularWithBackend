@@ -1,50 +1,65 @@
-<div class="card position-relative text-center h-100 border-1" style="cursor:pointer">
+<div
+  class="card position-relative text-center h-100 border-1"
+  style="cursor: pointer"
+>
   <div class="image-wrapper position-relative">
-
-  <img
-  [src]="item.images[0] || 'assets/lady.jpg'"  
-  [appHoverImage]="item.images[1] || 'assets/lady.jpg'" 
-  class="card-img-top product-img"
-  [alt]="item.title || 'Product'"
-/>
-
+    <img
+      [src]="item.images?.[0] || item.image || 'assets/lady.jpg'"
+      [appHoverImage]="item.images?.[1] || item.images?.[0] || item.image || 'assets/lady.jpg'"
+      class="card-img-top product-img"
+      [alt]="item.title || 'Product'"
+    />
 
     <div class="icon-menu d-flex flex-column">
       <!-- Eye: عرض التفاصيل -->
       <button class="icon-btn" (click)="markAsViewed(item)">
-        <i class="bi" [ngClass]="isViewed(item.id) ? 'bi-eye-fill text-info' : 'bi-eye'"></i>
+        <i
+          class="bi"
+          [ngClass]="isViewed(item.id) ? 'bi-eye-fill text-info' : 'bi-eye'"
+        ></i>
       </button>
 
       <!-- Bag: إضافة/إزالة من الكارت -->
       <button class="icon-btn" (click)="toggleCart()">
-        <i class="bi" [ngClass]="isInCart ? 'bi-bag-fill text-success' : 'bi-bag text-dark'"></i>
+        <i
+          class="bi"
+          [ngClass]="isInCart ? 'bi-bag-fill text-success' : 'bi-bag text-dark'"
+        ></i>
       </button>
 
       <!-- Heart: إضافة/إزالة من المفضلة -->
       <button class="icon-btn" (click)="toggleFav()">
-        <i class="bi" [ngClass]="isFav ? 'bi-heart-fill text-danger' : 'bi-heart text-dark'"></i>
+        <i
+          class="bi"
+          [ngClass]="isFav ? 'bi-heart-fill text-danger' : 'bi-heart text-dark'"
+        ></i>
       </button>
     </div>
   </div>
 
   <div class="card-body pt-0 left-text">
     <div class="d-flex justify-content-between">
-      <p style="color: hsl(353, 100%, 78%)">{{ item.category.name }}</p>
-      <p class="text-end">({{item.id}})</p>
+      <p style="color: hsl(353, 100%, 78%)">
+        {{ item.category || "Category" }}
+      </p>
+      <p class="text-end">({{ item.id }})</p>
     </div>
 
-    <p class="text-secondary text-start">{{ item.title || 'Hand Wash' }}</p>
+    <p class="text-secondary text-start">{{ item.title || "Hand Wash" }}</p>
 
     <div class="d-flex">
-      <h5>{{ item.price | currency:'USD' }}</h5>
+      <h5>{{ item.price | currency : "USD" }}</h5>
       <h5 class="ms-3 text-secondary text-decoration-line-through">
-        {{ (item.price * 1.4).toFixed(2) | currency:'USD' }}
+        {{ (item.price * 1.4).toFixed(2) | currency : "USD" }}
       </h5>
     </div>
 
     <div class="d-flex align-items-center gap-2">
       <!-- النجوم -->
-      <i class="bi bi-star-fill text-warning" *ngFor="let s of [].constructor(4); index as i"></i>
+      <i
+        class="bi bi-star-fill text-warning"
+        *ngFor="let s of [].constructor(4); index as i"
+      ></i>
       <i class="bi bi-star-half text-warning"></i>
     </div>
   </div>

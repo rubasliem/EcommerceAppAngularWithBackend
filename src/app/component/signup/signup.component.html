@@ -1,1 +1,163 @@
-<p>signup works!</p>
+<div class="signup-container">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="signup-card">
+          <div class="text-center mb-4">
+            <div class="signup-icon mb-3">
+              <i class="bi bi-person-plus-fill"></i>
+            </div>
+            <h2 class="fw-bold mb-2">Create Account</h2>
+            <p class="text-muted">Join us today!</p>
+          </div>
+
+          <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="bi bi-person me-2"></i>Full Name
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                [class.is-invalid]="f['name'].invalid && f['name'].touched"
+                placeholder="Enter your full name"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="f['name'].invalid && f['name'].touched"
+              >
+                <span *ngIf="f['name'].errors?.['required']"
+                  >Name is required</span
+                >
+                <span *ngIf="f['name'].errors?.['minlength']"
+                  >Name must be at least 2 characters</span
+                >
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="bi bi-envelope me-2"></i>Email Address
+              </label>
+              <input
+                type="email"
+                class="form-control"
+                formControlName="email"
+                [class.is-invalid]="f['email'].invalid && f['email'].touched"
+                placeholder="Enter your email"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="f['email'].invalid && f['email'].touched"
+              >
+                <span *ngIf="f['email'].errors?.['required']"
+                  >Email is required</span
+                >
+                <span *ngIf="f['email'].errors?.['email']"
+                  >Please enter a valid email</span
+                >
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="bi bi-lock me-2"></i>Password
+              </label>
+              <div class="password-input-wrapper">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control"
+                  formControlName="password"
+                  [class.is-invalid]="
+                    f['password'].invalid && f['password'].touched
+                  "
+                  placeholder="Create a password"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  (click)="togglePassword()"
+                >
+                  <i
+                    class="bi"
+                    [class.bi-eye]="!showPassword"
+                    [class.bi-eye-slash]="showPassword"
+                  ></i>
+                </button>
+              </div>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="f['password'].invalid && f['password'].touched"
+              >
+                <span *ngIf="f['password'].errors?.['required']"
+                  >Password is required</span
+                >
+                <span *ngIf="f['password'].errors?.['minlength']"
+                  >Password must be at least 6 characters</span
+                >
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="bi bi-lock-fill me-2"></i>Confirm Password
+              </label>
+              <div class="password-input-wrapper">
+                <input
+                  [type]="showConfirmPassword ? 'text' : 'password'"
+                  class="form-control"
+                  formControlName="confirmPassword"
+                  [class.is-invalid]="(f['confirmPassword'].invalid && f['confirmPassword'].touched) || signupForm.errors?.['passwordMismatch']"
+                  placeholder="Confirm your password"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  (click)="toggleConfirmPassword()"
+                >
+                  <i
+                    class="bi"
+                    [class.bi-eye]="!showConfirmPassword"
+                    [class.bi-eye-slash]="showConfirmPassword"
+                  ></i>
+                </button>
+              </div>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="signupForm.errors?.['passwordMismatch'] && f['confirmPassword'].touched"
+              >
+                Passwords do not match
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary w-100 btn-lg"
+              [disabled]="isLoading"
+            >
+              <span *ngIf="!isLoading">
+                <i class="bi bi-check-circle me-2"></i>Create Account
+              </span>
+              <span *ngIf="isLoading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Creating account...
+              </span>
+            </button>
+          </form>
+
+          <div class="divider my-4">
+            <span>OR</span>
+          </div>
+
+          <div class="text-center">
+            <p class="mb-0">
+              Already have an account?
+              <a routerLink="/login" class="login-link">Sign In</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

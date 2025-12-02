@@ -1,1 +1,129 @@
-<p>login works!</p>
+<div class="login-container">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="login-card">
+          <!-- Header -->
+          <div class="text-center mb-4">
+            <div class="login-icon mb-3">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <h2 class="fw-bold mb-2">Welcome Back!</h2>
+            <p class="text-muted">Sign in to your account</p>
+          </div>
+
+          <!-- Login Form -->
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <!-- Email -->
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="bi bi-envelope me-2"></i>Email Address
+              </label>
+              <input
+                type="email"
+                class="form-control"
+                formControlName="email"
+                [class.is-invalid]="f['email'].invalid && f['email'].touched"
+                placeholder="Enter your email"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="f['email'].invalid && f['email'].touched"
+              >
+                <span *ngIf="f['email'].errors?.['required']"
+                  >Email is required</span
+                >
+                <span *ngIf="f['email'].errors?.['email']"
+                  >Please enter a valid email</span
+                >
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="bi bi-lock me-2"></i>Password
+              </label>
+              <div class="password-input-wrapper">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control"
+                  formControlName="password"
+                  [class.is-invalid]="
+                    f['password'].invalid && f['password'].touched
+                  "
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  (click)="togglePassword()"
+                >
+                  <i
+                    class="bi"
+                    [class.bi-eye]="!showPassword"
+                    [class.bi-eye-slash]="showPassword"
+                  ></i>
+                </button>
+              </div>
+              <div
+                class="invalid-feedback d-block"
+                *ngIf="f['password'].invalid && f['password'].touched"
+              >
+                <span *ngIf="f['password'].errors?.['required']"
+                  >Password is required</span
+                >
+                <span *ngIf="f['password'].errors?.['minlength']"
+                  >Password must be at least 6 characters</span
+                >
+              </div>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="rememberMe"
+                />
+                <label class="form-check-label" for="rememberMe">
+                  Remember me
+                </label>
+              </div>
+              <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="btn btn-primary w-100 btn-lg"
+              [disabled]="isLoading"
+            >
+              <span *ngIf="!isLoading">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+              </span>
+              <span *ngIf="isLoading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Signing in...
+              </span>
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="divider my-4">
+            <span>OR</span>
+          </div>
+
+          <!-- Sign Up Link -->
+          <div class="text-center">
+            <p class="mb-0">
+              Don't have an account?
+              <a routerLink="/signup" class="signup-link">Sign Up</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

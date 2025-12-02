@@ -1,0 +1,139 @@
+<div class="container mx-auto my-5 w-75">
+  <h2 class="fw-bold text-center mb-5">My Orders 📦</h2>
+
+  <div *ngIf="orders.length === 0" class="alert alert-info text-center">
+    <h4>No orders yet</h4>
+    <p>Start shopping to see your order history here!</p>
+    <a routerLink="/" class="btn btn-primary mt-3">Start Shopping</a>
+  </div>
+
+  <div *ngFor="let order of orders; let i = index" class="card mb-4 shadow-sm">
+    <div class="card-header bg-success text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <strong>Order #{{ i + 1 }}</strong>
+          <span class="ms-3 badge bg-light text-dark">{{ order.status }}</span>
+        </div>
+        <div class="text-end">
+          <small>{{ order.date | date : "medium" }}</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <p class="mb-1">
+            <strong>Order ID:</strong> <code>{{ order.orderId }}</code>
+          </p>
+        </div>
+      </div>
+
+      <h6 class="fw-bold mb-3">Items:</h6>
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of order.items">
+              <td>
+                <div class="d-flex align-items-center">
+                  <img
+                    [src]="item.images[0]"
+                    class="me-2"
+                    style="
+                      width: 40px;
+                      height: 40px;
+                      object-fit: cover;
+                      border-radius: 4px;
+                    "
+                    [alt]="item.title"
+                  />
+                  <span>{{ item.title }}</span>
+                </div>
+              </td>
+              <td>{{ item.price | currency : "USD" }}</td>
+              <td>{{ item.quantity }}</td>
+              <td class="fw-bold">
+                {{ item.price * item.quantity | currency : "USD" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-end mt-3">
+        <div *ngIf="order.subtotal !== undefined" class="mb-2">
+          <span class="text-muted">Subtotal:</span>
+          <strong class="ms-2">{{ order.subtotal | currency : "USD" }}</strong>
+        </div>
+        <div *ngIf="order.shipping !== undefined" class="mb-2">
+          <span class="text-muted">Shipping:</span>
+          <strong class="ms-2" [class.text-success]="order.shipping === 0">
+            {{
+              order.shipping === 0
+                ? "FREE"
+                : (order.shipping | currency : "USD")
+            }}
+          </strong>
+        </div>
+        <div *ngIf="order.tax !== undefined" class="mb-2">
+          <span class="text-muted">Tax:</span>
+          <strong class="ms-2">{{ order.tax | currency : "USD" }}</strong>
+        </div>
+        <hr
+          *ngIf="
+            order.subtotal !== undefined ||
+            order.shipping !== undefined ||
+            order.tax !== undefined
+          "
+        />
+        <h5 class="fw-bold">
+          Total:
+          <span class="text-success">{{ order.total | currency : "USD" }}</span>
+        </h5>
+      </div>
+
+      <!-- Shipping Info if available -->
+      <div *ngIf="order.shippingInfo" class="mt-4 pt-3 border-top">
+        <h6 class="fw-bold mb-3">
+          <i class="bi bi-truck me-2"></i>Shipping Information
+        </h6>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="mb-1">
+              <strong>Name:</strong> {{ order.shippingInfo.name }}
+            </p>
+            <p class="mb-1">
+              <strong>Email:</strong> {{ order.shippingInfo.email }}
+            </p>
+            <p class="mb-1">
+              <strong>Phone:</strong> {{ order.shippingInfo.phone }}
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p class="mb-1"><strong>Address:</strong></p>
+            <p class="mb-0">{{ order.shippingInfo.address }}</p>
+            <p class="mb-0">
+              {{ order.shippingInfo.city }}, {{ order.shippingInfo.state }}
+              {{ order.shippingInfo.zipCode }}
+            </p>
+            <p class="mb-0">{{ order.shippingInfo.country }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="orders.length > 0" class="text-center mt-4">
+    <button class="btn btn-outline-danger" (click)="clearOrderHistory()">
+      Clear Order History
+    </button>
+  </div>
+</div>

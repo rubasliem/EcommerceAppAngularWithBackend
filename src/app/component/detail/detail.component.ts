@@ -39,7 +39,7 @@ export class DetailComponent {
     this.productService.getProductById(Number(id)).subscribe({
       next: (data) => {
         this.product = data;
-        this.selectedImage = data.images[0]; // الصورة الافتراضية
+        this.selectedImage = data.images?.[0] || data.image || ''; // الصورة الافتراضية
         window.scrollTo({ top: 0, behavior: 'smooth' }); // تمرير الصفحة لأعلى
       },
       error: (err) => console.error(err)

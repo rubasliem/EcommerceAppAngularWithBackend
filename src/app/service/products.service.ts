@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Category, Product } from '../interface/iproduct';
 
 
@@ -11,8 +12,7 @@ export class ProductsService {
 
   
   private apiUrl = 'https://api.escuelajs.co/api/v1/products';
-
-  private apiUrlCat = 'https://api.escuelajs.co/api/v1/categories'
+  private apiUrlCat = 'https://api.escuelajs.co/api/v1/categories';
 
   constructor(private http: HttpClient) {}
 
@@ -26,10 +26,11 @@ export class ProductsService {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 
-    getCategories(): Observable<Category[]> {
+  getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrlCat);
   }
-    getCategoryProducts(categoryId: number): Observable<any[]> {
+
+  getCategoryProducts(categoryId: number | string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrlCat}/${categoryId}/products`);
   }
 }

@@ -10,12 +10,21 @@ export interface Category {
 export interface Product {
   id: number;
   title: string;
-  slug: string;
+  slug?: string;
   price: number;
   description: string;
-  category: Category;
+  category?: Category | string;
   images: string[];
-  creationAt: string;
-  updatedAt: string;
-  quantity: number;
+  thumbnail?: string;
+  image?: string;
+  brand?: string;
+  stock?: number;
+  rating?: number | {
+    rate: number;
+    count: number;
+  };
+  discountPercentage?: number;
+  creationAt?: string;
+  updatedAt?: string;
+  quantity?: number;
 }

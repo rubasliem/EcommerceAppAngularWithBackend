@@ -11,8 +11,20 @@ bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(HttpClientModule),
     importProvidersFrom(BrowserAnimationsModule),
-    importProvidersFrom(ToastrModule.forRoot()), // 👈 تسجيل ToastrModule
+    importProvidersFrom(ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+      timeOut: 3000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true,
+    })),
     provideRouter(routes),
-    provideToastr(), // 👈 توفير ToastrService و ToastConfig
+    provideToastr({
+      positionClass: 'toast-top-center',
+      timeOut: 3000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true,
+    }),
   ]
 }).catch(err => console.error(err));
